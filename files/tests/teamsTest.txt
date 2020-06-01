@@ -1,0 +1,5 @@
+LIV  86
+TOT  54
+ARS  18
+CHE   0
+MUN   0

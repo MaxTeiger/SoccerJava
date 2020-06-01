@@ -1,0 +1,10 @@
+LIV         Kylian Mbape  22   180000    5     897678
+LIV        Karim Benzema  29   180000    5    8234325
+TOT       Roberto Carlos  49   180000   97    7659870
+TOT       Rafael Varanne  27   180000    5    7832609
+ARS    Cristiano Ronaldo  32   980000  180  100000000
+ARS        Iker Casillas  34   180000    0    6788675
+ARS       Andrés Iniesta  37   180000    5    3462553
+CHE            Leo Messi  31   880000  180  100000000
+CHE       Marco Verratti  26   180000    2    4324566
+MUN         Wayne Rooney  65    10000   20         10
