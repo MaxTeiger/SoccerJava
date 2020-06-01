@@ -11,5 +11,11 @@ making it possible to interact with the application.
 
 The application should (for the moment) implements abstract class, polymorphism, inheritance, user-defined exception(s), downcasting (or upcasting),
 file I/O, Generic Methods/Class 
-----
-Last update of this README file: 05-25-2020
+
+This project is available on [GitHub][GitHub].
+
+[GitHub]: https://github.com/MaxTeiger/SoccerJava
+
+--
+
+Last update of this README file: 06-01-2020
