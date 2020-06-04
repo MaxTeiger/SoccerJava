@@ -8,6 +8,10 @@ package met.cs622.soccermodel;
  */
 public class Player extends TeamMember implements Comparable<Player> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6910565782377782752L;
 	private int goals;
 	private int price;
 

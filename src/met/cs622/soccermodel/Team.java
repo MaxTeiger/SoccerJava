@@ -1,5 +1,6 @@
 package met.cs622.soccermodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,12 @@ import java.util.ArrayList;
  * Date: 05-25-2020
  * Course: CS-622
  */
-public class Team implements Comparable<Team>{
+public class Team implements Comparable<Team>, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4850363350122026890L;
+	
 	private String teamName;
 	private ArrayList<TeamMember> teamMembers;
 	private int points;

@@ -1,5 +1,7 @@
 package met.cs622.soccermodel;
 
+import java.io.Serializable;
+
 /**
  * This class represent the member of a team with
  * useful attributes for the team
@@ -7,7 +9,9 @@ package met.cs622.soccermodel;
  * Date: 05-25-2020
  * Course: CS-622
  */
-public abstract class TeamMember {
+public abstract class TeamMember implements Serializable {
+
+	private static final long serialVersionUID = -2910682364078484661L;
 	protected String name;
 	protected int age;
 	protected int payroll;

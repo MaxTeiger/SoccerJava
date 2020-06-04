@@ -6,8 +6,12 @@ import java.util.Scanner;
 import met.cs622.soccermodel.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 /**
  * Class used to read and write the information in the
@@ -48,7 +52,7 @@ public class FileHandler
 				player = new Player(name, age, payroll, goals, price);
 			} catch (TooYoungMemberException e) {
 				e.printStackTrace();
-			}
+			} 
 
 			try {
 				l.addPlayerInTeam(team, player);
@@ -144,6 +148,43 @@ public class FileHandler
 
 		outfilepw.close();
 		System.out.println("Teams data saved successfully in " +teamsFilePath);
+	}
+	
+	/**
+	 * This method saves the current object League in a file
+	 * using serialization.
+	 * @param filePath
+	 * @param league
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public static void serializeLeague(String filePath, League league) throws FileNotFoundException, IOException {
+		File serializationFic = new File(filePath);
+		// Stream opening on the file
+		ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(serializationFic));
+		oos.writeObject(league);
+		oos.close();
+		System.out.println("Succesfully saved using Serialization FH");
+	}
+	
+	/**
+	 * This method retrieve the object league from the file 
+	 * specified using deserialization
+	 * @param filePath
+	 * @return League
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static League deserializeLeague(String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
+		File serializationFic = new File(filePath);
+		ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(serializationFic)) ;
+		
+		// Read Object from the file 
+		League l = (League)ois.readObject();
+		// Close the stream
+		ois.close();
+		return l; 
 	}
 
 }// class end

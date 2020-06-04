@@ -1,5 +1,6 @@
 package met.cs622.soccermodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,11 @@ import java.util.ArrayList;
  * Date: 05-25-2020
  * Course: CS-622
  */
-public class League {
+public class League implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4241626652013472548L;
 	private ArrayList<Team> teams;
 
 	public League() 
@@ -37,7 +42,7 @@ public class League {
 			this.teams.add(new Team(tm_name));
 		}
 	}
-	
+
 	/**
 	 * Add a team in the league
 	 * @param teamName
@@ -101,7 +106,7 @@ public class League {
 				allPlayers.add(p);
 			}
 		}// for loop end
-		
+
 		return allPlayers;
 
 	}// method end

@@ -100,5 +100,35 @@ class FileHandlerTest {
 		}
 		
 	}// method end
+	
+	@Test
+	void testSerializeLeague() {
+		League l = new League();
+		l.addTeam(new Team("LIV", 12));
+		l.addTeam(new Team("NOT", 8));
+		
+		String filePath = "files" + File.separator + "tests" + File.separator + "serializeTest.dat";
+		try {
+			FileHandler.serializeLeague(filePath, l);
+		} catch (IOException e) {
+			fail("Cannot serialize league object");
+		}
+	}
+	
+	@Test 
+	void testDeserializeLeague() {
+		String filePath = "files" + File.separator + "tests" + File.separator + "serializeTest.dat";
+		League l = null;
+		try {
+			l = FileHandler.deserializeLeague(filePath);
+		} catch (ClassNotFoundException | IOException e) {
+			fail("Cannot deserialize object league");
+		} 
+		
+		assert(l.getAllPlayers().size()==0);
+		assert(l.getTeams().get(0).getTeamName().equals("LIV"));
+		
+		
+	}
 
 }// Class End

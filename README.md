@@ -10,7 +10,8 @@ The project can be run from the class met.cs622.view.MainMenu it should open a u
 making it possible to interact with the application.
 
 The application should (for the moment) implements abstract class, polymorphism, inheritance, user-defined exception(s), downcasting (or upcasting),
-file I/O, Generic Methods/Class 
+file I/O, Generic Methods/Class,
+Serialization, Lambdas, Streams
 
 This project is available on [GitHub][GitHub].
 
@@ -18,4 +19,4 @@ This project is available on [GitHub][GitHub].
 
 --
 
-Last update of this README file: 06-01-2020
+Last update of this README file: 06-03-2020

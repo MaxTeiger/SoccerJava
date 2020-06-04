@@ -9,6 +9,8 @@ package met.cs622.soccermodel;
  */
 public class Coach extends TeamMember {
 
+
+	private static final long serialVersionUID = -9105599445489930012L;
 	@SuppressWarnings("unused")
 	private int trophiesWon;
 	
