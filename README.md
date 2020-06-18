@@ -12,6 +12,7 @@ making it possible to interact with the application.
 The application should (for the moment) implements abstract class, polymorphism, inheritance, user-defined exception(s), downcasting (or upcasting),
 file I/O, Generic Methods/Class,
 Serialization, Lambdas, Streams
+and Database connectivity. 
 
 This project is available on [GitHub][GitHub].
 

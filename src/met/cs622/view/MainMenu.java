@@ -3,6 +3,7 @@ package met.cs622.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -30,10 +31,12 @@ public class MainMenu {
 
 
 		league = new League();
+
 		String serializedPath = "files" +File.separator +"serializedLeague.dat";
 		try {
 			// Initialisation using serialization
 			league = FileHandler.deserializeLeague(serializedPath);
+
 		} catch (ClassNotFoundException | IOException e1) {
 			System.out.println("Cannot load using serialization, trying with regular file I/O...");
 			try {
@@ -49,12 +52,16 @@ public class MainMenu {
 			try { // save information on players 
 				FileHandler.saveCurrentPlayerInfo(league);
 				FileHandler.saveCurrentTeamsInfo(league);
-				
+				DBHandler dbh = new DBHandler("metcs622_soccerjava.db");
+				dbh.updateLeagueDB(league);
 				// Serialize the league
 				FileHandler.serializeLeague(serializedPath, league);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -76,7 +83,8 @@ public class MainMenu {
 					+ "What do you want to do?\n"
 					+ "1. Manage Teams\n"
 					+ "2. Display Ranking\n"
-					+ "3. Quit\n");
+					+ "3. Use DataBase\n"
+					+ "4. Quit\n");
 
 			userInput = sc.nextLine().charAt(0);
 
@@ -88,6 +96,9 @@ public class MainMenu {
 				rankingMenu();
 				break;
 			case '3':
+				DBMenu();
+				break;
+			case '4':
 				System.out.println("Bye!");
 				out = true;
 				break;
@@ -98,6 +109,67 @@ public class MainMenu {
 		}// Loop end
 
 	}// method end
+	
+	/**
+	 * The menu that use the DB
+	 */
+	public static void DBMenu() {
+		boolean out = false;
+		char userInput;
+
+		DBHandler dbh = null;
+		try {
+			dbh = new DBHandler("metcs622_soccerjava.db");
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		while(!out) { // Menu loop 
+			System.out.println("DB Menu\n"
+					+ "=========\n"
+					+ "What do you want to do?\n"
+					+ "1. Display players (goals ranked)\n"
+					+ "2. Display players (name  ranked)\n"
+					+ "3. Display team ranking\n"
+					+ "4. Quit\n");
+
+			userInput = sc.nextLine().charAt(0);
+
+			switch(userInput) {
+			case '1':
+				try {
+					dbh.displayPlayersOrdered("goals");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case '2':
+				try {
+					dbh.displayPlayersOrdered("name");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case '3':
+				try {
+					dbh.getTeamsInformationFromDB();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case '4':
+				System.out.println("Back!");
+				dbh.close();
+				out = true;
+				break;
+			default:
+				System.out.println("Wrong input");
+			}
+
+		}// Loop end
+
+
+	}
 
 	/**
 	 * Display the menu about managing teams
@@ -311,10 +383,10 @@ public class MainMenu {
 				// 0: age 1: payroll 2: goals 3: price
 				int[] filters = setUserFilters();
 				allPlayers = league.getAllPlayers();
-				
+
 				// Stream creation
 				Stream<Player> playersStream = allPlayers.stream();
-				
+
 				// We apply the filters to the stream 
 				playersStream.filter(x -> x.getAge() > filters[0])
 				.filter(x -> x.getPayroll() > filters[1])
@@ -322,11 +394,11 @@ public class MainMenu {
 				.filter(x -> x.getPrice() > filters[3])
 				.forEach(x -> {
 					System.out.println(
-						x.getName() + "\tGoals: "
-						+ x.getGoals() +"\tPayroll: "
-						+ x.getPayroll() +"\tPrice: "
-						+ x.getPrice());});
-				
+							x.getName() + "\tGoals: "
+									+ x.getGoals() +"\tPayroll: "
+									+ x.getPayroll() +"\tPrice: "
+									+ x.getPrice());});
+
 				playersStream.close();
 				break; 
 			case '4':
@@ -339,7 +411,7 @@ public class MainMenu {
 		}// Loop end
 
 	}// method end
-	
+
 	/**
 	 * This method is used in the ranking menu to retrieve 
 	 * what filter the user wants to use 
@@ -347,7 +419,7 @@ public class MainMenu {
 	 * @return int[] 
 	 */
 	public static int[] setUserFilters() {
-		
+
 		// asks the user what filters he wants to apply
 		int age, payroll, goals, price;
 		System.out.println("What minimum age do you want to display?");
@@ -358,10 +430,10 @@ public class MainMenu {
 		goals=sc.nextInt();
 		System.out.println("What minimum price do you want to display?");
 		price=sc.nextInt();
-		
+
 		sc.nextLine(); // empty buffer
 		int[] filters = {age, payroll, goals, price};
 		return filters;
-		
+
 	}
 }
